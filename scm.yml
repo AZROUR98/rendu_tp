@@ -4,14 +4,11 @@ kind: PersistentVolumeClaim
 metadata:
   name: test-pvc
 spec:
-  capacity:
-    storage: 100Mi
-  hostPath:
-    path: "/mnt/data/ckan"
+  storageClassName: longhorn
   accessModes:
     - ReadWriteMany # ReadOnlyMany not supported
   resources:
-    requests: 
+    requests:
       storage: 5Gi
 ---
 apiVersion: apps/v1 
