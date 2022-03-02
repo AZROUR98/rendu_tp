@@ -71,4 +71,5 @@ spec:
             name: scm-manager-service
             port:
               number: 80
+              
 
