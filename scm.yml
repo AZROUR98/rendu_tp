@@ -16,7 +16,7 @@ kind: Deployment
 metadata:
   labels:
     run: sdorra/scm-manager
-  name: sdorra/scm-manager
+  name: sdorra/scm-manager-deploy
 spec:
   replicas: 2
   selector:
@@ -40,3 +40,18 @@ spec:
         ports:
           - name: http
             containerPort: 80 
+            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sdorra/scm-manager-service
+spec:
+  selector:
+    run: sdorra/scm-manager
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+
