@@ -15,28 +15,28 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    run: sdorra/scm-manager
-  name: sdorra/scm-manager-deploy
+    run: scm-manager
+  name: scm-manager-deploy
 spec:
   replicas: 2
   selector:
     matchLabels:
-      run: sdorra/scm-manager
+      run: scm-manager
   template:
     metadata:
       labels:
-        run: sdorra/scm-manager
+        run: scm-manager
     spec:
       volumes:
       - name: www
         persistentVolumeClaim:
           claimName: test-pvc
       containers:
-      - image: sdorra/scm-manager
-        name: sdorra/scm-manager
+      - image: scm-manager
+        name: scm-manager
         volumeMounts:
         - name: www
-          mountPath: /usr/share/sdorra/scm-manager/html
+          mountPath: /usr/share/scm-manager/html
         ports:
           - name: http
             containerPort: 80 
@@ -45,10 +45,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: sdorra/scm-manager-service
+  name: scm-manager-service
 spec:
   selector:
-    run: sdorra/scm-manager
+    run: scm-manager
   ports:
     - name: http
       protocol: TCP
@@ -58,17 +58,17 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: sdorra/scm-manager-ingress
+  name: scm-manager-ingress
 spec:
   rules:
-  - host: sdorra/scm-manager.local
+  - host: scm-manager.local
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: sdorra/scm-manager-service
+            name: scm-manager-service
             port:
               number: 80
 
