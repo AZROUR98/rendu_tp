@@ -8,7 +8,7 @@ spec:
   accessModes:
     - ReadWriteMany # ReadOnlyMany not supported
   resources:
-    requests:
+    requests: 
       storage: 5Gi
 ---
 apiVersion: apps/v1 
