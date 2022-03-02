@@ -69,7 +69,7 @@ spec:
         backend:
           service:
             name: scm-manager-service
-            port:
+            port: 
               number: 80
               
 
