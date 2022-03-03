@@ -55,6 +55,50 @@ spec:
       port: 80 
       targetPort: 80
 ---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  labels:
+    run: scm-manager
+  name: scm-manager-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: scm-manager
+  template:
+    metadata:
+      labels:
+        run: scm-manager
+    spec:
+      volumes:
+      - name: www
+        persistentVolumeClaim:
+          claimName: test-pvc
+      containers:
+      - image: sdorra/scm-manager
+        name: scm-manager
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/scm-manager/html
+        ports:
+          - name: http
+            containerPort: 80 
+       
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: scm-manager-service
+spec:
+  selector:
+    run: scm-manager
+  ports:
+    - name: http
+      protocol: TCP
+      port: 81
+      targetPort: 81
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
